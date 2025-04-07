@@ -70,11 +70,11 @@ addPoints2(0.143, -10)
 console.log("------------------")
 
 // ex5
-const prices = [10.34, 'xxx', 5.678, null, 20.9, 1.005, 0, 15, undefined, 0.5];
+const prices = [10.34, 'xxx', 5.678, null, 20.9, 1.005, 0, 19, undefined, 0.5];
 
-function findAverage(arr){
-    var sum=0
-    var cnt=0
+function findAverage(arr, rounding){
+    let sum=0
+    let cnt=0
     for(let i=0;i<arr.length;i++){
         // null도 숫자로 취급돼서 typeof 'number'를 넣어줘야 함
         if (typeof(arr[i]) === 'number' && !isNaN(arr[i])) {
@@ -84,7 +84,12 @@ function findAverage(arr){
     }
 
     const avg=sum/cnt
+    console.log(avg)
     // 소수점 자릿수 변환
-    console.log(avg.toFixed(2))
+    console.log("tofixed : "+ +avg.toFixed(rounding))
+
+    // toFixed 안쓰고
+    const roundedAvg = Math.round(avg * 10**rounding) / 10**rounding;
+    console.log("no tofixed :", roundedAvg)
 }
-findAverage(prices)
+findAverage(prices,2)
