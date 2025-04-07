@@ -31,7 +31,7 @@ function plength(n){
     const str = n.toString();
     // 소수점이 있는 경우에만 자릿수를 계산하도록 함
     const dotIndex = str.indexOf(".");
-    if (dotIndex === -1) return 0;
+    if (dotIndex == -1) return 0;
     return str.length - dotIndex - 1;
 }
 
@@ -69,3 +69,22 @@ addPoints2(0.143, -10.28)
 addPoints2(0.143, -10)
 console.log("------------------")
 
+// ex5
+const prices = [10.34, 'xxx', 5.678, null, 20.9, 1.005, 0, 15, undefined, 0.5];
+
+function findAverage(arr){
+    var sum=0
+    var cnt=0
+    for(let i=0;i<arr.length;i++){
+        // null도 숫자로 취급돼서 typeof 'number'를 넣어줘야 함
+        if (typeof(arr[i]) === 'number' && !isNaN(arr[i])) {
+            sum+=arr[i]
+            cnt+=1
+        }    
+    }
+
+    const avg=sum/cnt
+    // 소수점 자릿수 변환
+    console.log(avg.toFixed(2))
+}
+findAverage(prices)
