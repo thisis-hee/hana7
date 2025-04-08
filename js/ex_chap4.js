@@ -70,11 +70,12 @@ addPoints2(0.143, -10)
 console.log("------------------")
 
 // ex5
-const prices = [10.34, 'xxx', 5.678, null, 20.9, 1.005, 0, 19, undefined, 0.5];
+const prices = [10.34, 'xxx', 5.678, null, 20.9, 1.005, 0, 18, undefined, 0.5];
 
 function findAverage(arr, rounding){
     let sum=0
     let cnt=0
+
     for(let i=0;i<arr.length;i++){
         // null도 숫자로 취급돼서 typeof 'number'를 넣어줘야 함
         if (typeof(arr[i]) === 'number' && !isNaN(arr[i])) {
