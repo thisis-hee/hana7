@@ -115,3 +115,25 @@ function factorialTCO(n, acc = 1) {
 const ftco3 = factorialTCO(3);
 console.log("🚀 ~ ftco3:", ftco3);
 console.log("-------------------");
+
+function makeArray(n) {
+  if (n === 1) return [1];
+  return [...makeArray(n - 1), n];
+}
+
+console.log(makeArray(10));
+console.log("-------------------");
+
+function makeReverseArray(n) {
+  if (n === 1) return [1];
+  return [n, ...makeReverseArray(n - 1)];
+}
+console.log(makeReverseArray(5));
+console.log("-------------------");
+
+function makeArrayTCO(n, acc = []) {
+  if (n === 1) return [1, ...acc];
+  return makeArrayTCO(n - 1, [n, ...acc]);
+}
+console.log(makeArrayTCO(5));
+console.log("-------------------");
