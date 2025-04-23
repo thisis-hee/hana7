@@ -35,3 +35,111 @@ console.log("af :", af(5));
 
 const arr3 = [1, 2, 3];
 console.log(arr3.map((a, i) => a + i));
+
+const t = setTimeout(console.log, 1000, "1");
+
+const a: number[] = [1, 2, 3];
+a[100]?.toFixed();
+
+const b = [4, 5, "6"];
+
+const c = [...a, ...b];
+
+//const d=a.concat(b)
+
+interface SomeInterface {
+  [key: string]: number | undefined;
+}
+
+let is: SomeInterface = {
+  one: 1,
+  two: 2,
+};
+
+is["four"]?.toFixed(2);
+is["one"]?.toFixed(2);
+
+type IS = {
+  [k: string]: string | number;
+};
+
+let isobj1: IS = { id: 1, name: "Hong", 3: 5 }; // string에 number는 됨. Key는 내부적으로 string이라 가능
+
+type IS2 = {
+  [k: number]: string | number;
+};
+
+// let isobj2: IS2 = {id:1, name:'Hong', 3:5} // number에 string은 안됨
+
+const sym1: symbol = Symbol("s1");
+let isobj2: IS = { id: "1", name: "Hong", 3: 5, [sym1]: false };
+
+type A = {
+  name: string;
+  age: number;
+};
+
+type B = {
+  name: string;
+  addr: string;
+};
+
+const onlyA: A[] = [
+  { name: "lim", age: 10 },
+  { name: "hong", age: 20 },
+];
+const onlyB: B[] = [
+  { name: "jang", addr: "Seoul" },
+  { name: "park", addr: "Busan" },
+];
+const aOrB = [...onlyA, ...onlyB]; // (A|B)[]
+
+let abx: A | B = {
+  name: "Tan",
+  age: 30,
+  addr: "Inchon",
+};
+
+const abobj = {
+  name: "Tan",
+  age: 30,
+  addr: "Inchon",
+  x: 1,
+};
+
+aOrB.push({
+  name: "Tan",
+  age: 30,
+  addr: "Incheon",
+});
+
+aOrB.push(abobj);
+let aOrB2: [A | B] = [abobj];
+
+{
+  type A = { name: string; addr: string };
+  const blockA: A = { name: "Hong", addr: "busan" };
+
+  console.log("🚀 ~ blockA:", blockA);
+}
+
+function tuple() {
+  const a: [number, string, boolean] = [1, "lim", false];
+
+  let b: [number, string] = [a[0], a[1]];
+  console.log("🚀 ~ tuple ~ b:", b);
+}
+
+tuple();
+
+const greeting = (greet: "Hi" | "Hello", name: string, age: number) => {
+  console.log(`${greet}~! ${name} (${age})`);
+};
+
+greeting("Hi", 'Hong', 33)
+
+const tup: [string, number] = ['Kim', 55]
+const ary = ['Park', 44]
+
+greeting("Hello", ...tup)
+//greeting("Hello", ...ary)
