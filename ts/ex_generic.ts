@@ -1,3 +1,8 @@
+
+import { Factory } from "./generic";
+import DATA from "./data.json";
+import { lee, leeX } from "lee";
+
 interface IUser {
   id: number;
   age: number;
@@ -10,6 +15,13 @@ interface IDept {
   dname: string;
   captain: string;
 }
+
+let x: Hana7 = { id: 1, name: "hong" };
+let ft: Factory<string>;
+const y = leeX
+let xx: lee
+let xxx = DATA.USER_NAMES;
+console.log("🚀 ~ xxx:", xxx);
 
 type Change<T, K extends keyof T, U> = {
   [k in keyof T]: k extends K ? U : T[k];
@@ -54,8 +66,6 @@ const total = itemPrices.reduce(
 //type TPropertyKeyType = string | number | symbol;
 //type TUser = { [key: string]: string | number };
 
-
-
 function deleteArray<T>(
   arr: T[],
   startOrKey: number | keyof T,
@@ -84,11 +94,15 @@ console.log(deleteArray(arr, 2)); // [1, 2]
 console.log(deleteArray(arr, 1, 3)); // [1, 4]
 console.log(arr); // [1, 2, 3, 4]
 
-const users = [{ id: 1, name: 'Hong' }, { id: 2, name: 'Kim' }, { id: 3, name: 'Lee' }];
+const users = [
+  { id: 1, name: "Hong" },
+  { id: 2, name: "Kim" },
+  { id: 3, name: "Lee" },
+];
 
 console.log(deleteArray(users, 2)); // [Hong, Kim]
 console.log(deleteArray(users, 1, 2)); // [Hong, Lee]
-console.log(deleteArray(users, 'id', 2)); // [Hong, Lee]
-console.log(deleteArray(users, 'name', 'Lee')); // [Hong, Kim]
+console.log(deleteArray(users, "id", 2)); // [Hong, Lee]
+console.log(deleteArray(users, "name", "Lee")); // [Hong, Kim]
 
-export {}
+export {};

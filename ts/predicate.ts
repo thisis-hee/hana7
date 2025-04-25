@@ -80,3 +80,5 @@ try {
 } catch (error) {
   console.log(toErrorWithMessage(error).message); // (라)
 }
+
+export {}
