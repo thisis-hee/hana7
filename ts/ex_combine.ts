@@ -37,3 +37,24 @@ let combineY: ICombined = {
   dname: "bbb",
   captain: "ccc",
 };
+
+type ArrayItems<T> = T extends (infer X)[] // T extends unknown[] ? T[number] : T // '참'이라면 Item이라는 Generic Type을 선언(생성)
+  ? X
+  : T; // '거짓'일 때는 정확히 추론할 수 없으므로 사용하면 안됨!
+
+type StringItem = ArrayItems<string>; // string
+type StringArrayItem = ArrayItems<string[]>; // string
+type NumberArrayItem = ArrayItems<number[]>; // number
+type BooleanArrayItem = ArrayItems<boolean[]>; // boolean
+type StringArrayItem2 = ArrayItems<Array<string>>; // string[] ⇒ string
+type String2DItem = ArrayItems<string[][]>; // string[]
+
+type Excludex<T, U> = T extends U ? never : T;
+type Ee = Exclude<string | number, string>;
+type Ex = Excludex<string | number | boolean, string>;
+
+type Berry = `${string}berry`
+const x1:Berry='Strawberry';
+const x2:Berry='Blueberry';
+const x3:Berry='Cloudberry';
+const x4:Berry='Blackberry';
