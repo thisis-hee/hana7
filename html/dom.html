@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+</head>
+<body>
+    <h1>Title</h1>
+    <form name ="frm" id="frm">
+        <div id="dv">
+            <button id="btn" type="submit">Submit</button>
+        </div>
+    <script>
+        const frm=document.getElementsByName('frm');
+        console.log("🚀 ~ frm:", frm)
+        const div = document.getElementsByTagName('div')
+        console.log("🚀 ~ div:", div)
+        const btn = document.getElementById('btn')
+        console.log("🚀 ~ btn:", btn)
+    </script>
+</body>
+</html>
