@@ -1,15 +1,22 @@
-import type { LoginUser } from "../App";
+import type { RefObject } from 'react';
+import { useSession } from '../contexts/session/SessionContext';
 
 type Props = {
-  loginUser: LoginUser;
-  logout: () => void;
+  logoutButtonRef: RefObject<HTMLButtonElement | null>;
 };
 
-export default function Profile({ loginUser, logout }: Props) {
+export default function Profile({ logoutButtonRef }: Props) {
+  const {
+    session: { loginUser },
+    logout,
+  } = useSession();
+
   return (
     <>
       <h3>LoginUser: {loginUser?.name}</h3>
-      <button onClick={logout}>LogOut</button>
+      <button ref={logoutButtonRef} onClick={logout}>
+        LogOut
+      </button>
     </>
   );
 }

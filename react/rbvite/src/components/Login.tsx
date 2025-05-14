@@ -1,46 +1,86 @@
-import { useRef, type FormEvent } from "react";
-import type { LoginFn } from "../App";
+import {
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type FormEvent,
+} from 'react';
+import { useSession } from '../contexts/session/SessionContext';
 
-type Props = { login: LoginFn };
+export type LoginHandler = {
+  str: string;
+  getName: () => string;
+  makeX: (n: number) => void;
+  focusId: () => void;
+  validate: () => boolean;
+};
 
-export default function Login({ login }: Props) {
+export default function Login() {
+  const { login, loginHandler: loginHandlerRef } = useSession();
+  const [x, setX] = useState(0);
   const idRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  const makeLogin = (evt: FormEvent) => {
+  const loginHandler: LoginHandler = {
+    str: 'STRING',
+    makeX(n: number) {
+      setX(n);
+    },
+    focusId() {
+      idRef.current?.focus();
+    },
+    getName() {
+      return nameRef.current?.value || '';
+    },
+    validate() {
+      const id = Number(idRef.current?.value);
+      const name = nameRef.current?.value;
+
+      if (!id || isNaN(id)) {
+        alert('Input the user id!');
+        idRef.current?.focus();
+        return false;
+      } else if (!name) {
+        alert('Input the user name!');
+        nameRef.current?.focus();
+        return false;
+      }
+
+      return true;
+    },
+  };
+
+  useImperativeHandle(loginHandlerRef, () => loginHandler);
+
+  const makeLogin = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const id = Number(idRef.current?.value);
-    const name = nameRef.current?.value;
+    const name = nameRef.current?.value ?? '';
 
-    if (!id || isNaN(id)) {
-      alert("Input the id and name");
-      if (idRef.current) {
-        idRef.current.focus();
-      }
-      return;
-    } else if (!name) {
-      alert("Input the id and name");
-      if (nameRef.current) {
-        nameRef.current.focus();
-      }
-      return;
-    }
     login(id, name);
   };
+
+  useEffect(() => {
+    const intl = setInterval(() => setX(x => x + 1), 1000);
+
+    return () => clearInterval(intl);
+  }, []);
 
   return (
     <>
       <form onSubmit={makeLogin}>
         <div>
-          LoginID:
-          <input ref={idRef} type="number" />
+          LoginID({x}):
+          <input ref={idRef} type='number' />
         </div>
         <div>
-          LoginName: <input ref={nameRef} type="text" />
+          LoginName:
+          <input type='text' ref={nameRef} />
         </div>
-        <button type="reset">Cancel</button>
-        <button type="submit">Login</button>
+        <button type='reset'>Cancel</button>
+        <button type='submit'>Login</button>
       </form>
+      <button onClick={() => setX(x => x + 1)}>Set X</button>
     </>
   );
 }

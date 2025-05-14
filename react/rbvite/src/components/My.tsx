@@ -1,72 +1,43 @@
-import { useRef, type FormEvent } from "react";
-import type { LoginFn, Session } from "../App";
-import Login from "./Login";
-import Profile from "./Profile";
+import Login from './Login';
+import Profile from './Profile';
+import Item from './Item';
+import { useState, type RefObject } from 'react';
+import { useSession } from '../contexts/session/SessionContext';
 
 type Props = {
-  session: Session;
-  login: LoginFn;
-  logout: () => void;
-  removeItem: (id: number) => void;
-  addItem: (id: number, name: string, price: number) => void;
+  logoutButtonRef: RefObject<HTMLButtonElement | null>;
 };
 
-export default function My({
-  session: { loginUser, cart },
-  login,
-  logout,
-  removeItem,
-  addItem,
-}: Props) {
-  const idRef = useRef<HTMLInputElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const priceRef = useRef<HTMLInputElement>(null);
+export default function My({ logoutButtonRef }: Props) {
+  const {
+    session: { loginUser, cart },
+  } = useSession();
 
-  const addCart = (evt: FormEvent) => {
-    evt.preventDefault();
-    const id = Number(idRef.current?.value);
-    const name = nameRef.current?.value;
-    const price = Number(priceRef.current?.value);
-
-    if (!id || !name || !price) {
-      alert("Input all component");
-      return;
-    }
-    addItem(id, name, price);
-  };
+  const [isAdding, setAdding] = useState(false);
+  const toggleAdding = () => setAdding(!isAdding);
 
   return (
     <>
-      {loginUser ? (
-        <Profile loginUser={loginUser} logout={logout} />
-      ) : (
-        <Login login={login} />
-      )}
+      {loginUser ? <Profile logoutButtonRef={logoutButtonRef} /> : <Login />}
+
       <div>
         <ul>
-          {cart.map((item) => (
+          {cart.map(item => (
             <li key={item.id}>
-              {item.id}. {item.name}({item.price.toLocaleString()})
-              <button onClick={() => removeItem(item.id)}>x</button>
+              <Item item={item} />
             </li>
           ))}
+          {isAdding ? (
+            <li>
+              <Item
+                item={{ id: 0, name: '', price: 3000 }}
+                toggleAdding={toggleAdding}
+              />
+            </li>
+          ) : (
+            <button onClick={() => setAdding(true)}>ADD</button>
+          )}
         </ul>
-        <form onSubmit={addCart}>
-          <div>
-            상품ID:
-            <input ref={idRef} type="number" />
-          </div>
-          <div>
-            상품명:
-            <input ref={nameRef} type="text" />
-          </div>
-          <div>
-            가격:
-            <input ref={priceRef} type="number" />
-          </div>
-          <button type="reset">취소</button>
-          <button type="submit">상품 추가</button>
-        </form>
       </div>
     </>
   );
